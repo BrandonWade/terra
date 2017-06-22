@@ -1,0 +1,19 @@
+.Card {
+  lost-waffle: 1/3;
+
+  display: flex;
+  flex-flow: column;
+}
+
+.Card-display {
+  flex-grow: 1;
+}
+
+.Card-controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.Card-controls-item {
+  flex-grow: 1;
+}
