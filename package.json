@@ -2,7 +2,6 @@
   "name": "Terra",
   "version": "1.0.0",
   "description": "Retrieves new images from reddit to use as desktop wallpaper.",
-  "main": "index.js",
   "scripts": {
     "build": ".\\node_modules\\.bin\\webpack",
     "start": "webpack-dev-server --content-base .\\src\\app\\dist --port=5001"

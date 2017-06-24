@@ -7,8 +7,10 @@ class Button extends Component {
   }
 
   render() {
+    const { handleClick } = this.props;
+
     return (
-      <button className={ this.props.className }>{ this.props.text }</button>
+      <button className={ this.props.className } onClick={ () => handleClick() }>{ this.props.text }</button>
     );
   }
 };

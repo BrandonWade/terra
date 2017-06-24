@@ -4,11 +4,18 @@ import Controls from './controls';
 import './card.css';
 
 class Card extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const { viewImage, setImage, deleteImage } = this.props;
+    
     return (
       <div className={ 'Card' }>
-        <Display />
-        <Controls />
+        <Display viewImage={ viewImage } />
+        <Controls setImage={ setImage }
+                  deleteImage={ deleteImage } />
       </div>
     );
   }

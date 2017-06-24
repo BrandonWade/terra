@@ -1,5 +1,5 @@
 .Card {
-  lost-waffle: 1/3;
+  lost-waffle: 1/4 4 var(--gutter);
 
   display: flex;
   flex-flow: column;
@@ -7,6 +7,11 @@
 
 .Card-display {
   flex-grow: 1;
+}
+
+.Card-display-image {
+  width: 100%;
+  height: 100%;
 }
 
 .Card-controls {
