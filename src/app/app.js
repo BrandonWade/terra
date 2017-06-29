@@ -1,33 +1,38 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { viewImage, setImage, deleteImage } from './actions/card';
 import Card from './components/card/card';
-import card from './reducers/card';
-import './app.css';
 
-const initialState = {
-  currentImage: '',
-  images: [{}, {}, {}, {}, {}, {}],
+class App extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { images, store } = this.props;
+    
+    return (
+      <div id={ 'container' }>
+        {
+          images.map((card, index) => {
+            return (
+              <Card key={ index }
+                    viewImage={ () => this.props.dispatch(viewImage(index)) }
+                    setImage={ () => this.props.dispatch(setImage(index)) }
+                    deleteImage={ () => this.props.dispatch(deleteImage(index)) } />
+            );
+          })
+        }
+      </div>
+    );
+  }
 }
-const store = createStore(card, initialState);
 
-const App = () => (
-  <div id={ 'container' }>
-    {
-      store.getState().images.map((card, index) => {
-        return (
-          <Card key={ index }
-                viewImage={ () => store.dispatch(viewImage(index)) }
-                setImage={ () => store.dispatch(setImage(index)) }
-                deleteImage={ () => store.dispatch(deleteImage(index)) } />
-        );
-      })
-    }
-  </div>
-);
+const mapStateToProps = state => {
+  return {
+    currentImage: state.currentImage,
+    images: state.images,
+  };
+};
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+export default connect(mapStateToProps)(App);

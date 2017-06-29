@@ -10,7 +10,7 @@ class Card extends Component {
 
   render() {
     const { viewImage, setImage, deleteImage } = this.props;
-    
+
     return (
       <div className={ 'Card' }>
         <Display viewImage={ viewImage } />

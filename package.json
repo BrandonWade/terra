@@ -17,6 +17,7 @@
     "babel-preset-env": "^1.5.2",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
+    "deep-freeze": "0.0.1",
     "extract-text-webpack-plugin": "^2.1.2",
     "lost": "^8.0.0",
     "postcss": "^6.0.2",

@@ -8,7 +8,7 @@ class Controls extends Component {
 
   render() {
     const { setImage, deleteImage } = this.props;
-    
+
     return (
       <div className={ 'Card-controls' }>
         <Button handleClick={ () => setImage() }
