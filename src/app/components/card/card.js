@@ -9,11 +9,13 @@ class Card extends Component {
   }
 
   render() {
-    const { viewImage, setImage, deleteImage } = this.props;
-
+    const { image, viewImage, setImage, deleteImage } = this.props;
+    console.log('IMAGE = ');
+    console.log(image);
     return (
       <div className={ 'Card' }>
-        <Display viewImage={ viewImage } />
+        <Display image={ image }
+                 viewImage={ viewImage } />
         <Controls setImage={ setImage }
                   deleteImage={ deleteImage } />
       </div>

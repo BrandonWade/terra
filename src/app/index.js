@@ -6,9 +6,10 @@ import App from './app';
 import card from './reducers/card';
 import './app.css';
 
+const images = JSON.parse(window.images).data.children;
 const initialState = {
   currentImage: '',
-  images: [{ i:0 }, { i:1 }, { i:2 }, { i:3 }, { i:4 }, { i:5 }],
+  images: images || [],
 }
 
 const store = createStore(card, initialState);

@@ -8,7 +8,7 @@ export default (state = {}, action) => {
     case VIEW_IMAGE:
       return {
         ...state,
-        currentImage: action.index,
+        currentImage: state.images[action.index],
       };
     case SET_IMAGE:
       return state;

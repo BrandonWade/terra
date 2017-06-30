@@ -1,3 +1,4 @@
 node_modules
 src/__pycache__
-src/app/dist
+src/app/dist/app.js
+src/app/dist/app.css

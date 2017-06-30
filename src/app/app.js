@@ -9,14 +9,15 @@ class App extends Component {
   }
 
   render() {
-    const { images, store } = this.props;
-    
+    const { images } = this.props;
+
     return (
       <div id={ 'container' }>
         {
           images.map((card, index) => {
             return (
               <Card key={ index }
+                    image={ images[index] }
                     viewImage={ () => this.props.dispatch(viewImage(index)) }
                     setImage={ () => this.props.dispatch(setImage(index)) }
                     deleteImage={ () => this.props.dispatch(deleteImage(index)) } />

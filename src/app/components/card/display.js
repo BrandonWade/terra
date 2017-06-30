@@ -6,13 +6,13 @@ class Display extends Component {
   }
 
   render() {
-    const { viewImage } = this.props;
+    const { image, viewImage } = this.props;
 
     return (
       <div className={ 'Card-display' }>
         <img onClick={ () => viewImage() }
              className={ 'Card-display-image' }
-             src={ this.props.image } />
+             src={ image.data.url } />
       </div>
     );
   }

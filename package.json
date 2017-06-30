@@ -1,5 +1,5 @@
 {
-  "name": "Terra",
+  "name": "terra",
   "version": "1.0.0",
   "description": "Retrieves new images from reddit to use as desktop wallpaper.",
   "scripts": {
