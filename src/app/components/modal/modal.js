@@ -8,13 +8,12 @@ class Modal extends Component {
 
   render() {
     const { image, hideModal } = this.props;
-    console.log(image);
 
     return(
-      <div className={ 'modal' }>
-        <div className={ 'modal-content' }>
-          <span className={ 'close' } onClick={ () => hideModal() }>&times;</span>
-          <img src={ image.data.url } />
+      <div className={ 'Modal' }>
+        <div className={ 'Modal-content' }>
+          <span className={ 'Modal-close' } onClick={ () => hideModal() }>&times;</span>
+          <img className={ 'Modal-content-image' } src={ image.data.url } />
         </div>
       </div>
     );

@@ -11,13 +11,15 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props);
-    const { images, currentImage } = this.props;
+    const { images, currentImage, modalVisible } = this.props;
 
     return (
       <div id={ 'container' }>
-        <Modal hideModal={ () => this.props.dispatch(hideModal()) }
-               image={ images[0] } />
+        {
+          modalVisible ?
+          <Modal hideModal={ () => this.props.dispatch(hideModal()) } image={ currentImage } />
+          : null
+        }
         {
           images.map((card, index) => {
             return (
@@ -36,9 +38,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentImage: state.card.currentImage,
-    images: state.card.images,
-    modalVisible: state.modal.modalVisible,
+    currentImage: state.currentImage,
+    images: state.images,
+    modalVisible: state.modalVisible,
   };
 };
 
