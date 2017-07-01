@@ -1,14 +1,21 @@
 import deepFreeze from 'deep-freeze';
 import { VIEW_IMAGE, SET_IMAGE, DELETE_IMAGE } from '../actions/card';
+import { HIDE_MODAL } from '../actions/modal';
 
 export default (state = {}, action) => {
   deepFreeze(state);
 
   switch (action.type) {
+    case HIDE_MODAL:
+      return {
+        ...state,
+        modalVisible: false,
+      };
     case VIEW_IMAGE:
       return {
         ...state,
         currentImage: state.images[action.index],
+        modalVisible: true,
       };
     case SET_IMAGE:
       return state;
