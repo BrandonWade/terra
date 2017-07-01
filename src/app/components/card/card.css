@@ -1,16 +1,31 @@
 .Card {
   lost-waffle: 1/4 4 var(--gutter);
 
-  display: flex;
-  flex-flow: column;
+  max-width: 425px;
+  max-height: 225px;
+  width: 425px;
+  height: 225px;
 }
 
 .Card-display {
+  height: calc(100% - var(--gutter));
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: #111;
+  border: 1px solid #000;
+}
+
+.Card-display:hover {
+  border: 1px solid #777;
 }
 
 .Card-display-image {
-  width: 100%;
-  height: 100%;
+  display: block;
+  max-width: 425px;
+  max-height: 225px;
+  width: auto;
+  height: auto;
 }
 
 .Card-controls {

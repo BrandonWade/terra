@@ -12,10 +12,10 @@ class Controls extends Component {
     return (
       <div className={ 'Card-controls' }>
         <Button handleClick={ () => setImage() }
-                className={ 'Card-controls-item' }
+                className={ 'Button Card-controls-item' }
                 text={ 'Set' } />
         <Button handleClick={ () => deleteImage() }
-                className={ 'Card-controls-item' }
+                className={ 'Button Card-controls-item' }
                 text={ 'Delete' } />
       </div>
     );

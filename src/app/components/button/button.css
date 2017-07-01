@@ -1,0 +1,12 @@
+.Button {
+  padding: 10px;
+  color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #000;
+  background: #111;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.Button:hover {
+  border: 1px solid #777;
+}

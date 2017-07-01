@@ -1,12 +1,16 @@
-:root {
-  --gutter: 20px;
-}
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-* {
-  lost-utility: edit;
+:root {
+  --gutter: 30px;
 }
 
 html, body, #root, #container {
   height: 100%;
   margin: 0;
+  background-color: #202020;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#container {
+  padding: var(--gutter);
 }
