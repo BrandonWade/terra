@@ -8,17 +8,23 @@ export default (state = {}, action) => {
     case VIEW_IMAGE:
       return {
         ...state,
-        currentImage: state.images[action.index],
+        card: {
+          ...state.card,
+          currentImage: state.images[action.index],
+        },
       };
     case SET_IMAGE:
       return state;
     case DELETE_IMAGE:
       return {
         ...state,
-        images: [
-          ...state.images.slice(0, action.index),
-          ...state.images.slice(action.index + 1),
-        ],
+        card: {
+          ...state.card,
+          images: [
+            ...state.images.slice(0, action.index),
+            ...state.images.slice(action.index + 1),
+          ],
+        },
       };
     default:
       return state;

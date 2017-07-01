@@ -3,16 +3,21 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import App from './app';
-import card from './reducers/card';
+import reducer from './reducers/index';
 import './app.css';
 
 const images = JSON.parse(window.images).data.children;
 const initialState = {
-  currentImage: '',
-  images: images || [],
-}
+  card: {
+    currentImage: '',
+    images: images || [],
+  },
+  modal: {
+    modalVisible: false,
+  },
+};
 
-const store = createStore(card, initialState);
+const store = createStore(reducer, initialState);
 
 ReactDOM.render(
   <Provider store={ store }>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { viewImage, setImage, deleteImage } from './actions/card';
+import { showModal, hideModal } from './actions/modal';
+import Modal from './components/modal/modal';
 import Card from './components/card/card';
 
 class App extends Component {
@@ -9,10 +11,13 @@ class App extends Component {
   }
 
   render() {
-    const { images } = this.props;
+    console.log(this.props);
+    const { images, currentImage } = this.props;
 
     return (
       <div id={ 'container' }>
+        <Modal hideModal={ () => this.props.dispatch(hideModal()) }
+               image={ images[0] } />
         {
           images.map((card, index) => {
             return (
@@ -31,8 +36,9 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentImage: state.currentImage,
-    images: state.images,
+    currentImage: state.card.currentImage,
+    images: state.card.images,
+    modalVisible: state.modal.modalVisible,
   };
 };
 
