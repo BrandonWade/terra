@@ -6,7 +6,7 @@
 </head>
   <body>
     <div id="root"></div>
-    <script>var images = '{{ images_json | tojson }}';</script>
+    <script>var images = {{ images_json | safe }};</script>
     <script src="dist/app.js"></script>
   </body>
 </html>

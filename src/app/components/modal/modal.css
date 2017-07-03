@@ -7,10 +7,10 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.8);
+  display: flex;
 }
 
 .Modal-content {
-  box-sizing: border-box;
   background-color: #111;
   border: 1px solid #000;
   margin: 30px auto;
@@ -37,7 +37,7 @@
 
 .Modal-close:hover,
 .Modal-close:focus {
-  color: #fff;
+  color: #ddd;
   text-decoration: none;
   cursor: pointer;
 }

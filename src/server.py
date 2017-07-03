@@ -18,6 +18,6 @@ def index():
     if req.status_code != 200:
         abort(req.status_code)
 
-    images_json = json.loads(req.content)
+    images_json = json.dumps(req.content.decode("utf-8"))
 
     return render_template('app.html', images_json=images_json)
