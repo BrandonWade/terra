@@ -18,8 +18,16 @@ export default (state = {}, action) => {
         modalVisible: true,
       };
     case SET_IMAGE:
+      fetch(`/set/${action.index}`, {
+        method: 'POST',
+      })
+
       return state;
     case DELETE_IMAGE:
+      fetch(`/delete/${action.index}`, {
+        method: 'DELETE',
+      })
+
       return {
         ...state,
         images: [
