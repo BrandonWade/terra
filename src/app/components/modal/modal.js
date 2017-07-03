@@ -10,10 +10,14 @@ class Modal extends Component {
     const { image, hideModal } = this.props;
 
     return(
-      <div className={ 'Modal' }>
+      <div className={ 'Modal' } onClick={ () => hideModal() }>
         <div className={ 'Modal-content' }>
-          <span className={ 'Modal-close' } onClick={ () => hideModal() }>&times;</span>
-          <img className={ 'Modal-content-image' } src={ image.data.url } />
+          <div className={ 'Modal-header' }>
+            <span className={ 'Modal-close' } onClick={ () => hideModal() }>&times;</span>
+          </div>
+          <div className={ 'Modal-body' }>
+            <img className={ 'Modal-body-image' } src={ image.data.url } />
+          </div>
         </div>
       </div>
     );
