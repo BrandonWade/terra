@@ -9,7 +9,8 @@ class Display extends Component {
     const { image, viewImage } = this.props;
 
     return (
-      <div className={ 'Card-display' }>
+      <div onClick={ () => viewImage() }
+           className={ 'Card-display' }>
         <img onClick={ () => viewImage() }
              className={ 'Card-display-image' }
              src={ image.data.url } />

@@ -30,7 +30,6 @@
 
 .Card-controls {
   display: flex;
-  flex-wrap: wrap;
 }
 
 .Card-controls-item {

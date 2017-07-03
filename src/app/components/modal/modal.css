@@ -15,17 +15,17 @@
   border: 1px solid #000;
   margin: 30px auto;
   padding: 20px;
-  width: auto;
-  height: auto;
-  max-width: 90vw;
-  max-height: 90vh;
 }
 
-.Modal-content-image {
+.Modal-body {
+}
+
+.Modal-body-image {
+  display: block;
   width: auto;
   height: auto;
   max-width: 90vw;
-  max-height: 90vh;
+  max-height: 85vh;
 }
 
 .Modal-close {
