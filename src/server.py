@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 import urllib.request
 from flask import Flask, render_template, abort, request
 from pprint import pprint
@@ -21,6 +22,9 @@ def index():
 
     raw_json = json.loads(req.content)
     images = raw_json['data']['children']
+
+    if not os.path.exists('gallery'):
+        os.makedirs('gallery')
 
     for image in images:
         resource = urllib.request.urlopen(image['data']['url'])

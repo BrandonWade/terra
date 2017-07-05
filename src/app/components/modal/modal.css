@@ -8,12 +8,13 @@
   overflow: auto;
   background-color: rgba(0,0,0,0.8);
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Modal-content {
   background-color: #111;
   border: 1px solid #000;
-  margin: 30px auto;
   padding: 20px;
 }
 
