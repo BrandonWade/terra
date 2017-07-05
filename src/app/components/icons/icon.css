@@ -1,0 +1,7 @@
+.Icon {
+  fill: #aaa;
+}
+
+.Icon:hover {
+  fill: #ddd;
+}

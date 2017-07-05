@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Icon from '../icon/icon';
-import ImageIcon from '../../icons/image';
-import DeleteIcon from '../../icons/delete';
+import ImageIcon from '../icons/image';
+import DeleteIcon from '../icons/delete';
 
 class Controls extends Component {
   constructor(props) {
@@ -13,14 +12,10 @@ class Controls extends Component {
 
     return (
       <div className={ 'Card-controls' }>
-        <Icon handleClick={ () => setImage() }
-              className={ 'Icon Card-controls-item' }>
-          <ImageIcon />
-        </Icon>
-        <Icon handleClick={ () => deleteImage() }
-              className={ 'Icon Card-controls-item' }>
-          <DeleteIcon />
-        </Icon>
+        <ImageIcon handleClick={ () => setImage() }
+                   className={ 'Card-controls-item' } />
+        <DeleteIcon handleClick={ () => deleteImage() }
+                    className={ 'Card-controls-item' } />
       </div>
     );
   }
