@@ -20,17 +20,19 @@ class App extends Component {
           <Modal hideModal={ () => this.props.dispatch(hideModal()) } image={ currentImage } />
           : null
         }
-        {
-          images.map((card, index) => {
-            return (
-              <Card key={ index }
-                    image={ images[index] }
-                    viewImage={ () => this.props.dispatch(viewImage(index)) }
-                    setImage={ () => this.props.dispatch(setImage(index)) }
-                    deleteImage={ () => this.props.dispatch(deleteImage(index)) } />
-            );
-          })
-        }
+        <div className={ 'card-wrapper' }>
+          {
+            images.map((card, index) => {
+              return (
+                <Card key={ index }
+                      image={ images[index] }
+                      viewImage={ () => this.props.dispatch(viewImage(index)) }
+                      setImage={ () => this.props.dispatch(setImage(index)) }
+                      deleteImage={ () => this.props.dispatch(deleteImage(index)) } />
+              );
+            })
+          }
+        </div>
       </div>
     );
   }
