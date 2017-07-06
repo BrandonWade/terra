@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import hashlib
 import urllib.request
 from flask import Flask, render_template, abort, request
 from pprint import pprint
@@ -26,11 +27,16 @@ def index():
     if not os.path.exists('gallery'):
         os.makedirs('gallery')
 
-    for image in images:
-        resource = urllib.request.urlopen(image['data']['url'])
-        output = open('gallery\\' + image['data']['title'] + '.jpg', 'wb')
-        output.write(resource.read())
-        output.close()
+    for curr_img in images:
+        image = curr_img['data']
+        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
+        file_path = 'gallery\\' + str(name_hash) + '.jpg'
+
+        if not os.path.isfile(file_path):
+            resource = urllib.request.urlopen(image['url'])
+            output = open(file_path, 'wb')
+            output.write(resource.read())
+            output.close()
 
     images_json = json.dumps(req.content.decode("utf-8"))
 
