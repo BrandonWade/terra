@@ -3,7 +3,8 @@ import json
 import os
 import hashlib
 import urllib.request
-from flask import Flask, render_template, abort, request
+from image import Image
+from flask import Flask, render_template, abort, request, send_from_directory
 from pprint import pprint
 
 app = Flask(__name__, template_folder='app', static_folder='app/dist')
@@ -38,7 +39,8 @@ def index():
             output.write(resource.read())
             output.close()
 
-    images_json = json.dumps(req.content.decode("utf-8"))
+    images = get_images('gallery\\')
+    images_json = json.dumps([image.__dict__ for image in images])
 
     return render_template('app.html', images_json=images_json)
 
@@ -49,3 +51,17 @@ def set(name):
 @app.route('/delete/<name>', methods=['DELETE'])
 def delete(name):
     return ('', 204)
+
+@app.route('/gallery/<path:filename>')
+def serve_gallery(filename):
+    return send_from_directory(app.root_path + '/gallery/', filename)
+
+def get_images(path):
+    images = []
+    for f in os.listdir(path):
+        if os.path.isfile(os.path.join(path, f)):
+            image = Image()
+            image.path = os.path.join(path, f)
+            images.append(image)
+
+    return images

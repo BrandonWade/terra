@@ -6,10 +6,10 @@ import App from './app';
 import reducer from './reducers/index';
 import './app.css';
 
-const images = JSON.parse(window.images).data.children;
+const images = window.images || [];
 const initialState = {
   currentImage: '',
-  images: images || [],
+  images: images,
   modalVisible: false,
 };
 

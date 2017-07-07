@@ -16,7 +16,7 @@ class Modal extends Component {
             <span className={ 'Modal-close' } onClick={ () => hideModal() }>&times;</span>
           </div>
           <div className={ 'Modal-body' }>
-            <img className={ 'Modal-body-image' } src={ image.data.url } />
+            <img className={ 'Modal-body-image' } src={ image.path } />
           </div>
         </div>
       </div>
