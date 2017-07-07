@@ -18,12 +18,12 @@
   padding: 15px;
 }
 
-.Modal-body-image {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 90vw;
-  max-height: 85vh;
+.Modal-heading {
+  color: #ddd;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  display: inline-block;
 }
 
 .Modal-close {
@@ -38,4 +38,12 @@
   color: #ddd;
   text-decoration: none;
   cursor: pointer;
+}
+
+.Modal-body-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 85vh;
 }

@@ -13,6 +13,7 @@ class Modal extends Component {
       <div className={ 'Modal' } onClick={ () => hideModal() }>
         <div className={ 'Modal-content' }>
           <div className={ 'Modal-header' }>
+            <h3 className={ 'Modal-heading' }>{ image.name }</h3>
             <span className={ 'Modal-close' } onClick={ () => hideModal() }>&times;</span>
           </div>
           <div className={ 'Modal-body' }>

@@ -52,7 +52,7 @@ def set(name):
 def delete(name):
     return ('', 204)
 
-@app.route('/gallery/<path:filename>')
+@app.route('/images/<path:filename>')
 def serve_gallery(filename):
     return send_from_directory(app.root_path + '/gallery/', filename)
 
@@ -61,7 +61,8 @@ def get_images(path):
     for f in os.listdir(path):
         if os.path.isfile(os.path.join(path, f)):
             image = Image()
-            image.path = os.path.join(path, f)
+            image.name = f
+            image.path = os.path.join('images\\', f)
             images.append(image)
 
     return images
