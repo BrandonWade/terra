@@ -50,7 +50,8 @@ def set(name):
 
 @app.route('/delete/<name>', methods=['DELETE'])
 def delete(name):
-    return ('', 204)
+    os.remove('gallery\\' + name)
+    return (name, 200)
 
 @app.route('/images/<path:filename>')
 def serve_gallery(filename):
