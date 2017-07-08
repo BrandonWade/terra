@@ -15,5 +15,5 @@ Want awesome backgrounds for your desktop? Terra hits reddit's APIs to download 
 - Currently supports Windows - should be easily portable to OS X or Linux by updating the folder paths. This will be handled more elegantly in the future.
 
 ## Known Issues
-- If an image is not linked to directly, Terra will neither download nor display it properly
-- Images that are deleted will be downloaded again when visiting the gallery
+- If an image is not linked to directly, Terra will neither download nor display it properly.
+- Images that are deleted will be downloaded again when visiting the gallery.
