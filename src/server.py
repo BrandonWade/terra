@@ -16,40 +16,8 @@ GALLERY_DIR = 'gallery'
 
 @app.route('/')
 def index():
-    headers = {
-        'User-Agent': 'python:terra:1.0'
-    }
-
-    req = requests.get(API_ENDPOINT, headers=headers)
-    if req.status_code != 200:
-        abort(req.status_code)
-
-    raw_json = json.loads(req.content)
-    images = raw_json['data']['children']
-
-    if not os.path.exists(GALLERY_DIR):
-        os.makedirs(GALLERY_DIR)
-
-    ignore = []
-    ignore_path = os.path.join(GALLERY_DIR, 'ignore.txt')
-    with open(ignore_path) as file:
-        ignore = [line.strip() for line in file]
-        
-    for curr_img in images:
-        image = curr_img['data']
-        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
-        file_path = os.path.join(GALLERY_DIR, str(name_hash) + '.jpg')
-
-        if str(name_hash) + '.jpg' in ignore:
-            continue
-
-        if not os.path.isfile(file_path):
-            resource = urllib.request.urlopen(image['url'])
-            output = open(file_path, 'wb')
-            output.write(resource.read())
-            output.close()
-
-    images = get_images(GALLERY_DIR)
+    download_images()
+    images = get_images_from_gallery(GALLERY_DIR)
     images_json = json.dumps([image.__dict__ for image in images])
 
     return render_template('app.html', images_json=images_json)
@@ -72,7 +40,37 @@ def delete(name):
 def serve_gallery(filename):
     return send_from_directory(app.root_path + '/gallery/', filename)
 
-def get_images(path):
+def download_images():
+    headers = {
+        'User-Agent': 'python:terra:1.0'
+    }
+
+    req = requests.get(API_ENDPOINT, headers=headers)
+    if req.status_code != 200:
+        abort(req.status_code)
+
+    raw_json = json.loads(req.content)
+    images = raw_json['data']['children']
+
+    if not os.path.exists(GALLERY_DIR):
+        os.makedirs(GALLERY_DIR)
+
+    ignore_list = get_ignore_list()
+    for curr_img in images:
+        image = curr_img['data']
+        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
+        file_path = os.path.join(GALLERY_DIR, str(name_hash) + '.jpg')
+
+        if str(name_hash) + '.jpg' in ignore_list:
+            continue
+
+        if not os.path.isfile(file_path):
+            resource = urllib.request.urlopen(image['url'])
+            output = open(file_path, 'wb')
+            output.write(resource.read())
+            output.close()
+
+def get_images_from_gallery(path):
     images = []
     for f in os.listdir(path):
         if f != 'ignore.txt' and os.path.isfile(os.path.join(path, f)):
@@ -82,6 +80,14 @@ def get_images(path):
             images.append(image)
 
     return images
+
+def get_ignore_list():
+    ignore_list = []
+    ignore_path = os.path.join(GALLERY_DIR, 'ignore.txt')
+    with open(ignore_path) as file:
+        ignore_list = [line.strip() for line in file]
+
+    return ignore_list
 
 def ignore_file(name):
     ignore_path = os.path.join(GALLERY_DIR, 'ignore.txt')
