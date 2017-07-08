@@ -30,10 +30,18 @@ def index():
     if not os.path.exists(GALLERY_DIR):
         os.makedirs(GALLERY_DIR)
 
+    ignore = []
+    ignore_path = os.path.join(GALLERY_DIR, 'ignore.txt')
+    with open(ignore_path) as file:
+        ignore = [line.strip() for line in file]
+        
     for curr_img in images:
         image = curr_img['data']
         name_hash = hashlib.md5(image['title'].encode()).hexdigest()
         file_path = os.path.join(GALLERY_DIR, str(name_hash) + '.jpg')
+
+        if str(name_hash) + '.jpg' in ignore:
+            continue
 
         if not os.path.isfile(file_path):
             resource = urllib.request.urlopen(image['url'])
@@ -55,6 +63,7 @@ def set(name):
 
 @app.route('/delete/<name>', methods=['DELETE'])
 def delete(name):
+    ignore_file(name)
     image_path = os.path.join(GALLERY_DIR, name)
     os.remove(image_path)
     return (name, 200)
@@ -66,10 +75,15 @@ def serve_gallery(filename):
 def get_images(path):
     images = []
     for f in os.listdir(path):
-        if os.path.isfile(os.path.join(path, f)):
+        if f != 'ignore.txt' and os.path.isfile(os.path.join(path, f)):
             image = Image()
             image.name = f
             image.path = os.path.join('images', f)
             images.append(image)
 
     return images
+
+def ignore_file(name):
+    ignore_path = os.path.join(GALLERY_DIR, 'ignore.txt')
+    with open(ignore_path, 'a') as file:
+        file.write(name + '\n')
