@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import ctypes
 import hashlib
 import urllib.request
 from image import Image
@@ -46,7 +47,10 @@ def index():
 
 @app.route('/set/<name>', methods=['POST'])
 def set(name):
-    return ('', 204)
+    image_path = os.path.join(app.root_path, 'gallery', name)
+    SPI_SETDESKWALLPAPER = 20
+    ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
+    return (name, 200)
 
 @app.route('/delete/<name>', methods=['DELETE'])
 def delete(name):
