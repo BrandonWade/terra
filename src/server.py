@@ -33,7 +33,7 @@ def set(name):
 
 @app.route('/delete/<name>', methods=['DELETE'])
 def delete(name):
-    storage.ignore_file(name)
+    storage.ignore_image(name)
     image_path = os.path.join(storage.GALLERY_DIR, name)
     os.remove(image_path)
     return (name, 200)
@@ -60,6 +60,15 @@ def download_images():
     ignore_list = storage.get_ignore_list()
     for curr_img in images:
         image = curr_img['data']
+        name = image['title']
+
+        # TODO: Calculate these values
+        width = 0
+        height = 0
+        file_size = 0
+
+        storage.insert_image(name, width, height, file_size, False)
+
         name_hash = hashlib.md5(image['title'].encode()).hexdigest()
         file_path = os.path.join(storage.GALLERY_DIR, str(name_hash) + '.jpg')
 
