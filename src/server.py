@@ -54,27 +54,27 @@ def download_images():
     raw_json = json.loads(req.content)
     images = raw_json['data']['children']
 
+    # pprint(images[0]['data'])
+
     if not os.path.exists(storage.GALLERY_DIR):
         os.makedirs(storage.GALLERY_DIR)
 
-    ignore_list = storage.get_ignore_list()
     for curr_img in images:
         image = curr_img['data']
-        name = image['title']
+        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
+
+        reddit_id = image['id']
+        title = image['title']
+        file_name = str(name_hash) + '.jpg'
 
         # TODO: Calculate these values
         width = 0
         height = 0
         file_size = 0
 
-        storage.insert_image(name, width, height, file_size, False)
+        storage.insert_image(reddit_id, title, file_name, width, height, file_size, False)
 
-        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
-        file_path = os.path.join(storage.GALLERY_DIR, str(name_hash) + '.jpg')
-
-        if str(name_hash) + '.jpg' in ignore_list:
-            continue
-
+        file_path = os.path.join(storage.GALLERY_DIR, file_name)
         if not os.path.isfile(file_path):
             resource = urllib.request.urlopen(image['url'])
             output = open(file_path, 'wb')
@@ -84,7 +84,7 @@ def download_images():
 def get_images_from_gallery(path):
     images = []
     for f in os.listdir(path):
-        if f != 'ignore.txt' and os.path.isfile(os.path.join(path, f)):
+        if os.path.isfile(os.path.join(path, f)):
             image = Image()
             image.name = f
             image.path = os.path.join('images', f)
