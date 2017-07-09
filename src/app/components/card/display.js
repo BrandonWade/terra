@@ -13,7 +13,7 @@ class Display extends Component {
            className={ 'Card-display' }>
         <img onClick={ () => viewImage() }
              className={ 'Card-display-image' }
-             src={ image.path } />
+             src={ image.url } />
       </div>
     );
   }

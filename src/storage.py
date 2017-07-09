@@ -12,11 +12,10 @@ def init_db():
            id INTEGER PRIMARY KEY,
            reddit_id TEXT,
            title TEXT,
-           file_name TEXT,
            width INTEGER,
            height INTEGER,
            file_size INTEGER,
-           is_ignored BOOLEAN,
+           is_deleted BOOLEAN DEFAULT 0,
            download_date DATETIME DEFAULT CURRENT_TIMESTAMP
        )'''
     )
@@ -26,22 +25,57 @@ def init_db():
     ''')
     db.commit()
 
-def insert_image(reddit_id, title, file_name, width, height, file_size, is_ignored):
+def insert_image(reddit_id, title, width, height, file_size):
     db = sqlite3.connect('storage.db')
     cursor = db.cursor()
     cursor.execute('''
-        INSERT OR IGNORE INTO images (reddit_id, title, file_name, width, height, file_size, is_ignored)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        INSERT OR IGNORE INTO images (reddit_id, title, width, height, file_size)
+        VALUES (?, ?, ?, ?, ?)
     ''', (
         reddit_id,
         title,
-        file_name,
         width,
         height,
-        file_size,
-        is_ignored
+        file_size
     ))
     db.commit()
 
-def ignore_image(name):
-    return
+def image_exists(reddit_id):
+    db = sqlite3.connect('storage.db')
+    cursor = db.cursor()
+    cursor.execute('''
+        SELECT *
+        FROM images
+        WHERE reddit_id = ?
+    ''', (
+        reddit_id,
+    ))
+    return cursor.fetchone() != None
+
+def delete_image(reddit_id):
+    db = sqlite3.connect('storage.db')
+    cursor = db.cursor()
+    cursor.execute('''
+        UPDATE images
+        SET is_deleted = 1
+        WHERE reddit_id = ?
+    ''', (
+        reddit_id,
+    ))
+    db.commit()
+
+def get_images():
+    db = sqlite3.connect('storage.db')
+    db.row_factory = sqlite3.Row
+    cursor = db.cursor()
+    cursor.execute('''
+        SELECT
+        *,
+        reddit_id || '.jpg' AS 'file_name',
+        'images/' || reddit_id || '.jpg'  AS 'url'
+        FROM images
+        WHERE is_deleted = 0
+        ORDER BY id DESC
+    ''', ())
+
+    return cursor.fetchall()

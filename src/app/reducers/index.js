@@ -18,13 +18,13 @@ export default (state = {}, action) => {
         modalVisible: true,
       };
     case SET_IMAGE:
-      fetch(`/set/${state.images[action.index].name}`, {
+      fetch(`/set/${state.images[action.index].reddit_id}`, {
         method: 'POST',
       })
 
       return state;
     case DELETE_IMAGE:
-      fetch(`/delete/${state.images[action.index].name}`, {
+      fetch(`/delete/${state.images[action.index].reddit_id}`, {
         method: 'DELETE',
       })
 

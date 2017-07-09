@@ -2,7 +2,6 @@ import requests
 import json
 import os
 import ctypes
-import hashlib
 import urllib.request
 import storage
 from image import Image
@@ -19,27 +18,29 @@ storage.init_db()
 @app.route('/')
 def index():
     download_images()
-    images = get_images_from_gallery(storage.GALLERY_DIR)
-    images_json = json.dumps([image.__dict__ for image in images])
+    images = storage.get_images()
+    images_json = json.dumps([ dict(image) for image in images ])
 
     return render_template('app.html', images_json=images_json)
 
-@app.route('/set/<name>', methods=['POST'])
-def set(name):
+@app.route('/set/<reddit_id>', methods=['POST'])
+def set(reddit_id):
+    name = reddit_id + '.jpg'
     image_path = os.path.join(app.root_path, storage.GALLERY_DIR, name)
     SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
     return (name, 200)
 
-@app.route('/delete/<name>', methods=['DELETE'])
-def delete(name):
-    storage.ignore_image(name)
+@app.route('/delete/<reddit_id>', methods=['DELETE'])
+def delete(reddit_id):
+    name = reddit_id + '.jpg'
+    storage.delete_image(reddit_id)
     image_path = os.path.join(storage.GALLERY_DIR, name)
     os.remove(image_path)
     return (name, 200)
 
 @app.route('/images/<path:filename>')
-def serve_gallery(filename):
+def get(filename):
     return send_from_directory(app.root_path + '/gallery/', filename)
 
 def download_images():
@@ -54,40 +55,23 @@ def download_images():
     raw_json = json.loads(req.content)
     images = raw_json['data']['children']
 
-    # pprint(images[0]['data'])
-
     if not os.path.exists(storage.GALLERY_DIR):
         os.makedirs(storage.GALLERY_DIR)
 
     for curr_img in images:
         image = curr_img['data']
-        name_hash = hashlib.md5(image['title'].encode()).hexdigest()
 
         reddit_id = image['id']
         title = image['title']
-        file_name = str(name_hash) + '.jpg'
 
         # TODO: Calculate these values
         width = 0
         height = 0
         file_size = 0
 
-        storage.insert_image(reddit_id, title, file_name, width, height, file_size, False)
-
-        file_path = os.path.join(storage.GALLERY_DIR, file_name)
-        if not os.path.isfile(file_path):
+        if not storage.image_exists(reddit_id):
+            storage.insert_image(reddit_id, title, width, height, file_size)
             resource = urllib.request.urlopen(image['url'])
-            output = open(file_path, 'wb')
+            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
             output.write(resource.read())
             output.close()
-
-def get_images_from_gallery(path):
-    images = []
-    for f in os.listdir(path):
-        if os.path.isfile(os.path.join(path, f)):
-            image = Image()
-            image.name = f
-            image.path = os.path.join('images', f)
-            images.append(image)
-
-    return images
