@@ -2,9 +2,9 @@ import sqlite3
 import os
 
 GALLERY_DIR = 'gallery'
+db = sqlite3.connect('storage.db')
 
 def init_db():
-    db = sqlite3.connect('storage.db')
     cursor = db.cursor()
     cursor.execute('''
        CREATE TABLE IF NOT EXISTS
@@ -26,7 +26,6 @@ def init_db():
     db.commit()
 
 def insert_image(reddit_id, title, width, height, file_size):
-    db = sqlite3.connect('storage.db')
     cursor = db.cursor()
     cursor.execute('''
         INSERT OR IGNORE INTO images (reddit_id, title, width, height, file_size)
@@ -41,7 +40,6 @@ def insert_image(reddit_id, title, width, height, file_size):
     db.commit()
 
 def image_exists(reddit_id):
-    db = sqlite3.connect('storage.db')
     cursor = db.cursor()
     cursor.execute('''
         SELECT *
@@ -53,7 +51,6 @@ def image_exists(reddit_id):
     return cursor.fetchone() != None
 
 def delete_image(reddit_id):
-    db = sqlite3.connect('storage.db')
     cursor = db.cursor()
     cursor.execute('''
         UPDATE images
@@ -65,7 +62,6 @@ def delete_image(reddit_id):
     db.commit()
 
 def get_images():
-    db = sqlite3.connect('storage.db')
     db.row_factory = sqlite3.Row
     cursor = db.cursor()
     cursor.execute('''

@@ -4,7 +4,6 @@ import os
 import ctypes
 import urllib.request
 import storage
-from image import Image
 from flask import Flask, render_template, abort, request, send_from_directory
 from pprint import pprint
 
@@ -39,13 +38,13 @@ def delete(reddit_id):
     os.remove(image_path)
     return (name, 200)
 
-@app.route('/images/<path:filename>')
-def get(filename):
-    return send_from_directory(app.root_path + '/gallery/', filename)
+@app.route('/images/<file_name>')
+def get(file_name):
+    return send_from_directory(app.root_path + '/gallery/', file_name)
 
 def download_images():
     headers = {
-        'User-Agent': 'python:terra:1.0'
+        'User-Agent': 'python:terra:1.0.0'
     }
 
     req = requests.get(API_ENDPOINT, headers=headers)
