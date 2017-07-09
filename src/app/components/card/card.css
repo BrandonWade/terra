@@ -12,13 +12,13 @@
   display: flex;
   justify-content: center;
   box-sizing: border-box;
-  background-color: #111;
-  border: 1px solid #000;
+  background-color: var(--backdrop);
+  border: var(--border);
   overflow: hidden;
 }
 
 .Card-display:hover {
-  border: 1px solid #ddd;
+  border: 1px solid var(--highlight);
 }
 
 .Card-display-image {

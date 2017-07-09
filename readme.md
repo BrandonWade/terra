@@ -1,5 +1,5 @@
 # Terra
-Want awesome backgrounds for your desktop? Terra hits reddit's APIs to download the top images from https://www.reddit.com/r/EarthPorn/ for the day and lets you manage your gallery.
+Want awesome backgrounds for your desktop? Terra hits reddit's APIs to get the top images from https://www.reddit.com/r/EarthPorn/ for the day and downloads them to your gallery.
 
 ## Getting Started
 1. Clone this project
@@ -7,7 +7,7 @@ Want awesome backgrounds for your desktop? Terra hits reddit's APIs to download 
 3. `pip install flask requests` to download the backend packages
 4. `npm install` or `yarn` to download the frontend packages
 5. `npm run build` to build the frontend assets
-6. Run with `flask run`
+6. `flask run` to start the server
 7. Navigate to `localhost:5000`
 
 ## Notes

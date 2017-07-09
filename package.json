@@ -4,6 +4,7 @@
   "description": "Retrieves new images from reddit to use as desktop wallpaper.",
   "scripts": {
     "build": ".\\node_modules\\.bin\\webpack",
+    "watch": ".\\node_modules\\.bin\\webpack --watch",
     "start": "webpack-dev-server --content-base .\\src\\app\\dist --port=5001"
   },
   "keywords": [],

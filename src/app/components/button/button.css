@@ -2,11 +2,11 @@
   padding: 10px;
   color: #fff;
   box-sizing: border-box;
-  border: 1px solid #000;
-  background: #111;
+  border: var(--border);
+  background: var(--backdrop);
   font-family: 'Open Sans', sans-serif;
 }
 
 .Button:hover {
-  border: 1px solid #777;
+  border: 1px solid var(--highlight);
 }
