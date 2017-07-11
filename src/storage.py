@@ -16,7 +16,7 @@ def init_db():
            height INTEGER,
            file_size INTEGER,
            is_deleted BOOLEAN DEFAULT 0,
-           download_date DATETIME DEFAULT CURRENT_TIMESTAMP
+           download_date DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime'))
        )'''
     )
     cursor.execute('''

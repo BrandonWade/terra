@@ -59,18 +59,18 @@ def download_images():
 
     for curr_img in images:
         image = curr_img['data']
-
         reddit_id = image['id']
-        title = image['title']
-
-        # TODO: Calculate these values
-        width = 0
-        height = 0
-        file_size = 0
 
         if not storage.image_exists(reddit_id):
-            storage.insert_image(reddit_id, title, width, height, file_size)
-            resource = urllib.request.urlopen(image['url'])
+            response = urllib.request.urlopen(image['url'])
+
+            title = image['title']
+            width = 0
+            height = 0
+            file_size = response.getheader('Content-Length')
+
             output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
-            output.write(resource.read())
+            output.write(response.read())
             output.close()
+
+            storage.insert_image(reddit_id, title, width, height, file_size)
