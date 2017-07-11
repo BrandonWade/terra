@@ -4,7 +4,7 @@ Want awesome backgrounds for your desktop? Terra hits reddit's APIs to get the t
 ## Getting Started
 1. Clone this project
 2. Install Python 3
-3. `pip install flask requests` to download the backend packages
+3. `pip install flask requests pillow` to download the backend packages
 4. `npm install` or `yarn` to download the frontend packages
 5. `npm run build` to build the frontend assets
 6. `flask run` to start the server

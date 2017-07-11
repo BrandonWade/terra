@@ -64,8 +64,6 @@ def download_images():
 
         if not storage.image_exists(reddit_id):
             response = urllib.request.urlopen(image['url'])
-
-            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
             contents = response.read()
 
             title = image['title']
@@ -79,6 +77,7 @@ def download_images():
             else:
                 width, height = 0, 0
 
+            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
             output.write(contents)
             output.close()
 
