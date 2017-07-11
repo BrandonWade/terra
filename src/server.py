@@ -5,6 +5,7 @@ import ctypes
 import urllib.request
 import storage
 from flask import Flask, render_template, abort, request, send_from_directory
+from PIL import ImageFile
 from pprint import pprint
 
 app = Flask(__name__, template_folder='app', static_folder='app/dist')
@@ -64,13 +65,21 @@ def download_images():
         if not storage.image_exists(reddit_id):
             response = urllib.request.urlopen(image['url'])
 
+            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
+            contents = response.read()
+
             title = image['title']
-            width = 0
-            height = 0
             file_size = response.getheader('Content-Length')
 
-            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
-            output.write(response.read())
+            parser = ImageFile.Parser()
+            parser.feed(contents)
+
+            if parser.image != None:
+                width, height = parser.image.size
+            else:
+                width, height = 0, 0
+
+            output.write(contents)
             output.close()
 
             storage.insert_image(reddit_id, title, width, height, file_size)
