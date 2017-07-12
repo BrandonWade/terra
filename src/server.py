@@ -25,7 +25,8 @@ def index():
 
 @app.route('/set/<reddit_id>', methods=['POST'])
 def set(reddit_id):
-    name = reddit_id + '.jpg'
+    image = storage.get_image(reddit_id)
+    name = image['reddit_id'] + '.' + image['file_type']
     image_path = os.path.join(app.root_path, storage.GALLERY_DIR, name)
     SPI_SETDESKWALLPAPER = 20
     ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
@@ -33,7 +34,8 @@ def set(reddit_id):
 
 @app.route('/delete/<reddit_id>', methods=['DELETE'])
 def delete(reddit_id):
-    name = reddit_id + '.jpg'
+    image = storage.get_image(reddit_id)
+    name = image['reddit_id'] + '.' + image['file_type']
     storage.delete_image(reddit_id)
     image_path = os.path.join(storage.GALLERY_DIR, name)
     os.remove(image_path)
@@ -66,19 +68,20 @@ def download_images():
             response = urllib.request.urlopen(image['url'])
             contents = response.read()
 
-            title = image['title']
-            file_size = response.getheader('Content-Length')
-
             parser = ImageFile.Parser()
             parser.feed(contents)
 
             if parser.image != None:
+                title = image['title']
+                file_size = response.getheader('Content-Length')
                 width, height = parser.image.size
-            else:
-                width, height = 0, 0
+                file_type = parser.image.format.lower()
 
-            output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.jpg'), 'wb')
-            output.write(contents)
-            output.close()
+                if file_type == 'jpeg':
+                    file_type = 'jpg'
 
-            storage.insert_image(reddit_id, title, width, height, file_size)
+                output = open(os.path.join(storage.GALLERY_DIR, reddit_id + '.' + file_type), 'wb')
+                output.write(contents)
+                output.close()
+
+                storage.insert_image(reddit_id, title, width, height, file_size, file_type)

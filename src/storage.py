@@ -15,6 +15,7 @@ def init_db():
            width INTEGER,
            height INTEGER,
            file_size INTEGER,
+           file_type TEXT,
            is_deleted BOOLEAN DEFAULT 0,
            download_date DATETIME DEFAULT (DATETIME(CURRENT_TIMESTAMP, 'localtime'))
        )'''
@@ -25,21 +26,22 @@ def init_db():
     ''')
     db.commit()
 
-def insert_image(reddit_id, title, width, height, file_size):
+def insert_image(reddit_id, title, width, height, file_size, file_type):
     cursor = db.cursor()
     cursor.execute('''
-        INSERT OR IGNORE INTO images (reddit_id, title, width, height, file_size)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT OR IGNORE INTO images (reddit_id, title, width, height, file_size, file_type)
+        VALUES (?, ?, ?, ?, ?, ?)
     ''', (
         reddit_id,
         title,
         width,
         height,
-        file_size
+        file_size,
+        file_type
     ))
     db.commit()
 
-def image_exists(reddit_id):
+def get_image(reddit_id):
     cursor = db.cursor()
     cursor.execute('''
         SELECT *
@@ -48,7 +50,11 @@ def image_exists(reddit_id):
     ''', (
         reddit_id,
     ))
-    return cursor.fetchone() != None
+
+    return cursor.fetchone()
+
+def image_exists(reddit_id):
+    return get_image(reddit_id) != None
 
 def delete_image(reddit_id):
     cursor = db.cursor()
@@ -67,8 +73,8 @@ def get_images():
     cursor.execute('''
         SELECT
         *,
-        reddit_id || '.jpg' AS 'file_name',
-        'images/' || reddit_id || '.jpg'  AS 'url'
+        reddit_id || '.' || file_type AS 'file_name',
+        'images/' || reddit_id || '.' || file_type  AS 'url'
         FROM images
         WHERE is_deleted = 0
         ORDER BY id DESC
