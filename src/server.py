@@ -12,7 +12,7 @@ storage.init_db()
 
 @app.route('/')
 def index():
-    image.download_images()
+    image.get_images()
     images = storage.get_images()
     images_json = json.dumps([ dict(image) for image in images ])
 

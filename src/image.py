@@ -8,7 +8,16 @@ from PIL import ImageFile
 IMAGE_LIMIT = 20
 API_ENDPOINT = 'https://www.reddit.com/r/earthporn/top.json?limit=' + str(IMAGE_LIMIT)
 
-def download_images():
+def get_images():
+    images = get_image_data()
+
+    if not os.path.exists(storage.GALLERY_DIR):
+        os.makedirs(storage.GALLERY_DIR)
+
+    for image in images:
+        download_image(image['data'])
+
+def get_image_data():
     headers = {
         'User-Agent': 'python:terra:1.0.0'
     }
@@ -18,15 +27,10 @@ def download_images():
         abort(req.status_code)
 
     raw_json = json.loads(req.content)
-    images = raw_json['data']['children']
 
-    if not os.path.exists(storage.GALLERY_DIR):
-        os.makedirs(storage.GALLERY_DIR)
+    return raw_json['data']['children']
 
-    for image in images:
-        save_image(image['data'])
-
-def save_image(image):
+def download_image(image):
     reddit_id = image['id']
 
     if not storage.image_exists(reddit_id):
