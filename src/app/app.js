@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { viewImage, setImage, deleteImage } from './actions/card';
-import { showModal, hideModal } from './actions/modal';
+import { hideModal } from './actions/modal';
 import Modal from './components/modal/modal';
 import Card from './components/card/card';
 
@@ -15,11 +15,7 @@ class App extends Component {
 
     return (
       <div id={ 'container' }>
-        {
-          modalVisible ?
-          <Modal hideModal={ () => this.props.dispatch(hideModal()) } image={ currentImage } />
-          : null
-        }
+        <Modal hideModal={ () => this.props.dispatch(hideModal()) } modalVisible={ modalVisible } image={ currentImage } />
         <div className={ 'card-wrapper' }>
           {
             images.map((card, index) => {

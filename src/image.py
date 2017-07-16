@@ -4,6 +4,7 @@ import os
 import urllib.request
 import storage
 from PIL import ImageFile
+from flask import abort
 
 IMAGE_LIMIT = 20
 API_ENDPOINT = 'https://www.reddit.com/r/earthporn/top.json?limit=' + str(IMAGE_LIMIT)

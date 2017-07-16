@@ -3,7 +3,7 @@ import os
 import ctypes
 import storage
 import image
-from flask import Flask, render_template, abort, request, send_from_directory
+from flask import Flask, render_template, send_from_directory
 from PIL import ImageFile
 from pprint import pprint
 
