@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FadeModal from 'reboron/FadeModal';
+import OutlineModal from 'reboron/OutlineModal';
 import './modal.css';
 
 const backdropStyle = {
@@ -8,7 +8,11 @@ const backdropStyle = {
 
 const modalStyle = {
   width: 'auto',
-}
+};
+
+const rectStyle = {
+  stroke: '#202020',
+};
 
 class Modal extends Component {
   constructor(props) {
@@ -27,7 +31,7 @@ class Modal extends Component {
     const { image, hideModal } = this.props;
 
     return(
-      <FadeModal ref={ 'modal' } backdropStyle={ backdropStyle } modalStyle={ modalStyle } onHide={ () => hideModal() }>
+      <OutlineModal ref={ 'modal' } backdropStyle={ backdropStyle } modalStyle={ modalStyle } rectStyle={ rectStyle } onHide={ () => hideModal() }>
         <div className={ 'Modal-content' }>
           <div className={ 'Modal-header' }>
             <h3 className={ 'Modal-heading' }>{ image.file_name }</h3>
@@ -37,7 +41,7 @@ class Modal extends Component {
             <img className={ 'Modal-body-image' } src={ image.url } />
           </div>
         </div>
-      </FadeModal>
+      </OutlineModal>
     );
   }
 }

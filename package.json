@@ -31,7 +31,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
-    "reboron": "^0.4.1",
+    "reboron": "^0.4.2",
     "redux": "^3.7.0"
   }
 }
