@@ -21,9 +21,9 @@ class Modal extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.modalVisible) {
-      this.refs.modal.show();
+      this.refs.imageModal.show();
     } else {
-      this.refs.modal.hide();
+      this.refs.imageModal.hide();
     }
   }
 
@@ -31,14 +31,22 @@ class Modal extends Component {
     const { image, hideModal } = this.props;
 
     return(
-      <OutlineModal ref={ 'modal' } backdropStyle={ backdropStyle } modalStyle={ modalStyle } rectStyle={ rectStyle } onHide={ () => hideModal() }>
+      <OutlineModal ref={ 'imageModal' }
+                    backdropStyle={ backdropStyle }
+                    modalStyle={ modalStyle }
+                    rectStyle={ rectStyle }
+                    onHide={ () => hideModal() }>
         <div className={ 'Modal-content' }>
           <div className={ 'Modal-header' }>
             <h3 className={ 'Modal-heading' }>{ image.file_name }</h3>
-            <span className={ 'Modal-close' } onClick={ () => this.refs.modal.hide() }>&times;</span>
+            <span className={ 'Modal-close' }
+                  onClick={ () => this.refs.modal.hide() }>
+              &times;
+            </span>
           </div>
           <div className={ 'Modal-body' }>
-            <img className={ 'Modal-body-image' } src={ image.url } />
+            <img className={ 'Modal-body-image' }
+                 src={ image.url } />
           </div>
         </div>
       </OutlineModal>
