@@ -9,7 +9,7 @@ from flask import abort
 IMAGE_LIMIT = 20
 API_ENDPOINT = 'https://www.reddit.com/r/earthporn/top.json?limit=' + str(IMAGE_LIMIT)
 
-def get_images():
+def get_new_images():
     images = get_image_data()
 
     if not os.path.exists(storage.GALLERY_DIR):

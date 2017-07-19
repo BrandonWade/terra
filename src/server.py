@@ -3,6 +3,7 @@ import os
 import ctypes
 import storage
 import image
+import threading
 from flask import Flask, render_template, send_from_directory
 from PIL import ImageFile
 from pprint import pprint
@@ -12,9 +13,11 @@ storage.init_db()
 
 @app.route('/')
 def index():
-    image.get_images()
     images = storage.get_images()
     images_json = json.dumps([ dict(image) for image in images ])
+
+    download_thread = threading.Thread(target=image.get_new_images())
+    download_thread.start()
 
     return render_template('app.html', images_json=images_json)
 
