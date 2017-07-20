@@ -11,5 +11,4 @@ Want awesome backgrounds for your desktop? Terra hits reddit's APIs to get the t
 7. Navigate to `localhost:5000`
 
 ## Notes
-*This project is a work in progress - expect it to be broken or not fully functional at times.*
 - Currently supports Windows. At this time, OS X and Linux are not supported.
