@@ -1,13 +1,18 @@
 import requests
 import json
 import os
-import urllib.request
 import storage
 from PIL import ImageFile
 from flask import abort
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 
 IMAGE_LIMIT = 20
 API_ENDPOINT = 'https://www.reddit.com/r/earthporn/top.json?limit=' + str(IMAGE_LIMIT)
+
+headers = {
+    'User-Agent': 'python:terra:1.0.0'
+}
 
 def get_new_images():
     images = get_image_data()
@@ -19,10 +24,6 @@ def get_new_images():
         download_image(image['data'])
 
 def get_image_data():
-    headers = {
-        'User-Agent': 'python:terra:1.0.0'
-    }
-
     req = requests.get(API_ENDPOINT, headers=headers)
     if req.status_code != 200:
         abort(req.status_code)
@@ -35,8 +36,13 @@ def download_image(image):
     reddit_id = image['id']
 
     if not storage.image_exists(reddit_id):
-        response = urllib.request.urlopen(image['url'])
-        contents = response.read()
+        try:
+            request = Request(image['url'], headers=headers)
+            response = urlopen(request)
+            contents = response.read()
+        except HTTPError as e:
+            print('Error downloading image ' + reddit_id + ' - code ' + str(e.code))
+            return
 
         parser = ImageFile.Parser()
         parser.feed(contents)
