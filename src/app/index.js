@@ -1,23 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import configureStore from './store/configureStore';
 import App from './app';
-import reducer from './reducers/index';
 import './app.css';
 
-const images = window.images || [];
 const initialState = {
   currentImage: '',
-  images: images,
+  images: window.images || [],
   modalVisible: false,
 };
 
-const store = createStore(
-  reducer,
-  initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configureStore(initialState);
 
 ReactDOM.render(
   <Provider store={ store }>
