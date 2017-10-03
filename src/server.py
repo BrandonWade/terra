@@ -18,7 +18,11 @@ def index():
 
     return render_template('app.html', images_json=images_json)
 
-@app.route('/set/<reddit_id>', methods=['POST'])
+@app.route('/images')
+def fetch():
+    return ('fetch images', 200)
+
+@app.route('/images/<reddit_id>', methods=['POST'])
 def set(reddit_id):
     image = storage.get_image(reddit_id)
     name = image['reddit_id'] + '.' + image['file_type']
@@ -27,7 +31,7 @@ def set(reddit_id):
     ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, image_path, 3)
     return (name, 200)
 
-@app.route('/delete/<reddit_id>', methods=['DELETE'])
+@app.route('/images/<reddit_id>', methods=['DELETE'])
 def delete(reddit_id):
     image = storage.get_image(reddit_id)
     name = image['reddit_id'] + '.' + image['file_type']

@@ -6,16 +6,17 @@ import App from './app';
 import './app.css';
 
 const initialState = {
-  currentImage: '',
-  images: window.images || [],
-  modalVisible: false,
+    currentImage: '',
+    images: window.images || [],
+    modalVisible: false,
+    fetchingImages: false,
 };
 
 const store = configureStore(initialState);
 
 ReactDOM.render(
-  <Provider store={ store }>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={ store }>
+        <App />
+    </Provider>,
+    document.getElementById('root')
 );

@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { viewImage, setImage, deleteImage } from './actions/card';
-import { hideModal } from './actions/modal';
 import Modal from './components/modal/modal';
 import Card from './components/card/card';
+import {
+    modalAction,
+    fetchAction,
+    imageAction,
+    SHOW_MODAL,
+    HIDE_MODAL,
+    FETCH_IMAGES,
+    SET_IMAGE,
+    DELETE_IMAGE,
+} from './actions/index';
 
 class App extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
+      this.props.dispatch(fetchAction(FETCH_IMAGES));
   }
 
   render() {
@@ -15,16 +27,16 @@ class App extends Component {
 
     return (
       <div id={ 'container' }>
-        <Modal hideModal={ () => this.props.dispatch(hideModal()) } modalVisible={ modalVisible } image={ currentImage } />
+        <Modal hideModal={ () => this.props.dispatch(modalAction(HIDE_MODAL)) } modalVisible={ modalVisible } image={ currentImage } />
         <div className={ 'card-wrapper' }>
           {
             images.map((card, index) => {
               return (
                 <Card key={ index }
                       image={ images[index] }
-                      viewImage={ () => this.props.dispatch(viewImage(index)) }
-                      setImage={ () => this.props.dispatch(setImage(index)) }
-                      deleteImage={ () => this.props.dispatch(deleteImage(index)) } />
+                      viewImage={ () => this.props.dispatch(modalAction(SHOW_MODAL, index)) }
+                      setImage={ () => this.props.dispatch(imageAction(SET_IMAGE, index)) }
+                      deleteImage={ () => this.props.dispatch(imageAction(DELETE_IMAGE, index)) } />
               );
             })
           }
