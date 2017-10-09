@@ -19,7 +19,7 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.4",
     "deep-freeze": "0.0.1",
-    "extract-text-webpack-plugin": "^2.1.2",
+    "extract-text-webpack-plugin": "^3.0.0",
     "lost": "^8.0.0",
     "postcss": "^6.0.2",
     "postcss-loader": "^2.0.6",
@@ -28,10 +28,12 @@
     "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
+    "babel-polyfill": "^6.26.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-redux": "^5.0.5",
     "reboron": "^0.4.2",
-    "redux": "^3.7.0"
+    "redux": "^3.7.0",
+    "redux-saga": "^0.15.6"
   }
 }

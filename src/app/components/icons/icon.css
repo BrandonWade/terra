@@ -1,9 +1,7 @@
 .Icon {
   fill: var(--icon);
-  transition: all .2s ease-in-out;
 }
 
 .Icon:hover {
   fill: var(--highlight);
-  transform: scale(1.1);
 }
