@@ -37,8 +37,8 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 images: [
-                    ...state.images.slice(0, action.index),
-                    ...state.images.slice(action.index + 1),
+                    ...state.images.slice(0, action.data),
+                    ...state.images.slice(action.data + 1),
                 ],
             };
         case FETCHING_IMAGES:

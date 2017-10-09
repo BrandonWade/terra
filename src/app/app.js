@@ -18,7 +18,7 @@ class App extends Component {
     super(props);
   }
 
-  componentWillMount() {
+  componentDidMount() {
       this.props.dispatch(fetchAction(FETCH_IMAGES));
   }
 

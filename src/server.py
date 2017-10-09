@@ -12,7 +12,6 @@ storage.init_db()
 
 @app.route('/')
 def index():
-    image.get_new_images()
     images = storage.get_images()
     images_json = json.dumps([ dict(image) for image in images ])
 
@@ -20,7 +19,10 @@ def index():
 
 @app.route('/images')
 def fetch():
-    return ('fetch images', 200)
+    image.get_new_images()
+    images = storage.get_images()
+    images_json = json.dumps([ dict(image) for image in images ])
+    return (images_json, 200)
 
 @app.route('/images/<reddit_id>', methods=['POST'])
 def set(reddit_id):
